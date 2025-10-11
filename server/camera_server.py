@@ -13,7 +13,6 @@ import threading
 from flask import Flask, Response
 from datetime import datetime
 from picamera2 import Picamera2
-from PIL import Image
 
 # 配置日志
 logging.basicConfig(
@@ -50,9 +49,9 @@ class Camera:
         logger.info("初始化 PiCamera2 摄像头...")
         self.camera = Picamera2()
         
-        # 配置摄像头
-        config = self.camera.create_still_configuration(
-            main={"size": CAMERA_RESOLUTION}
+        # 配置摄像头（使用video配置，适合连续帧捕获）
+        config = self.camera.create_video_configuration(
+            main={"size": CAMERA_RESOLUTION, "format": "RGB888"}
         )
         self.camera.configure(config)
         logger.info(f"摄像头配置完成 - 分辨率: {CAMERA_RESOLUTION[0]}x{CAMERA_RESOLUTION[1]}")
@@ -107,16 +106,11 @@ class Camera:
         返回：JPEG格式的字节数据
         """
         try:
-            # 捕获图像数组
-            image_array = self.camera.capture_array()
-            
-            # 转换为PIL Image
-            image = Image.fromarray(image_array)
-            
-            # 转换为JPEG
+            # 直接捕获为JPEG格式（高效，无需numpy/PIL转换）
             stream = io.BytesIO()
-            image.save(stream, format='JPEG', quality=JPEG_QUALITY)
-            return stream.getvalue()
+            self.camera.capture_file(stream, format='jpeg')
+            stream.seek(0)  # 重置流位置到开头
+            return stream.read()
                 
         except Exception as e:
             logger.error(f"捕获帧失败: {e}")
