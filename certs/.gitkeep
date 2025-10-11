@@ -1,0 +1,3 @@
+# 此文件用于保持certs目录在git中被跟踪
+# 证书文件会在运行 generate_certs.py 后生成
+

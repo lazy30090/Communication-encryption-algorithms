@@ -1,0 +1,71 @@
+# ==================== Python ====================
+# 字节码
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.venv/
+
+# ==================== 证书和密钥（重要！）====================
+# 私钥和证书文件不应提交到版本控制
+certs/*.key
+certs/*.crt
+certs/*.pem
+*.key
+*.crt
+*.pem
+
+# 但保留目录
+!certs/.gitkeep
+
+# ==================== 日志 ====================
+logs/
+*.log
+
+# ==================== IDE ====================
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# ==================== 操作系统 ====================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ==================== 临时文件 ====================
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ==================== 测试和覆盖率 ====================
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# ==================== 其他 ====================
+# 配置覆盖文件
+config_local.py
+.env
+
